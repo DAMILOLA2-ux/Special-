@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content ="width=device-width" initial-scale="1.0" />
+    
+    <meta name="description" content="form">
+    <title>Coldbloom project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="successMessage" class="success-message" style="display: none;">
+  <strong>✔ Message Sent!</strong>
+  <p>Thanks for completing the form. We'll be in touch soon!</p>
+</div>
+      <div class="form-container">
+          <h1>Contact us</h1>
+      <form class="contact-form" action="#" method="post">
+          <div class="form-row">
+              <div class="form-group">
+        <label for="name">First Name *</label>
+        <input type="text" name="firstname" id="firstname">
+        <small class="error-message"></small>
+          </div>
+          
+          
+          <div class="form-group">
+        <label for="name">last Name *</label>
+        <input type="text" name="lastname" id="lastname">
+        <small class="error-message"></small>
+          </div>
+          
+          </div>
+          
+          <div class="form-group">
+        <label for="email">Email *</label>
+        <input type="email" name="email" id="email">
+        <small class="error-message"></small>
+          </div>
+          
+          
+          <div class="form-group">
+              <label>Query type *</label>
+              <div class="form-row">
+                  <label class="option-box">
+                 <input type="radio" name="query type" id="general enquiry"value="General enquiry">General Enquiry 
+             </label>
+             <label class="option-box">
+                <input type="radio" id="support request" name="query type" value="support request" >Support Request 
+            </label>
+              </div>
+         <small class="error-message"></small>
+           </div>
+           
+           <div class="form-group">
+               <label for="message" class="message">Message *</label>
+              <textarea rows="5" cols="10">
+               </textarea>
+         <small class="error-message"></small>
+           </div>
+           
+           <div class="form-group">
+               <label class="check-box"><input type="checkbox" id="consent">I hereby consent to being contacted by the team *</label>
+         <small class="error-message"></small>
+           </div>
+           
+           <button type="submit">Submit</button>
+      </form>
+      
+      
+    
+      </div>
+      
+      
+      
+      
+      <!-- js script -->
+ <script>
+   document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector(".contact-form");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        let isValid = true;
+        const inputs = form.querySelectorAll("input, textarea");
+
+        inputs.forEach(input => {
+            const errorMessage = input.nextElementSibling;
+            
+            if (input.type !== "radio" && input.type !== "checkbox") {
+                if (input.value.trim() === "") {
+                    isValid = false;
+                    errorMessage.textContent = "This field is required.";
+                } else {
+                    errorMessage.textContent = "";
+                }
+            }
+        });
+
+        // Validate query type radio buttons
+        const queryType = form.querySelector("input[name='query type']:checked");
+        if (!queryType) {
+            isValid = false;
+            const queryError = document.querySelector(".error-message");
+            queryError.textContent = "This field is required .";
+        } else {
+            const queryError = document.querySelector(".error-message");
+            queryError.textContent = "";
+        }
+
+        // Validate consent checkbox
+        const consentCheckbox = document.getElementById("consent");
+        if (!consentCheckbox.checked) {
+            isValid = false;
+            consentCheckbox.nextElementSibling.textContent = "You must consent to be contacted.";
+        } else {
+            consentCheckbox.nextElementSibling.textContent = "";
+        }
+
+        // If all fields are valid, display success message
+        if (isValid) {
+            successMessage.style.display = "block";
+            form.reset();
+            setTimeout(() => {
+                successMessage.style.display = "none";
+            }, 3000);
+        }
+    });
+});
+ </script>
+</body>
+</html>
